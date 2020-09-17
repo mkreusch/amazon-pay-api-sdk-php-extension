@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "require": {
     "php": ">=5.5.0",
-    "amzn/amazon-pay-api-sdk-php": ">=2.0.0"
+    "amzn/amazon-pay-api-sdk-php": ">=2.0.0",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {

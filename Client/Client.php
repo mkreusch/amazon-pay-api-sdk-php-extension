@@ -27,7 +27,7 @@ class Client extends \Amazon\Pay\API\Client{
         $result = parent::createCheckoutSession($checkoutSession, $headers);
         $response = json_decode($result['response'], true);
         if((int)$result['status']!==201){
-            throw new \AmazonPayException('createCheckoutSession failed: '.$response['message'].' - '.$response['reasonCode']);
+            throw new AmazonPayException('createCheckoutSession failed: '.$response['message'].' - '.$response['reasonCode']);
         }
 
         return new CheckoutSession($response);
@@ -81,7 +81,7 @@ class Client extends \Amazon\Pay\API\Client{
         $result = parent::completeCheckoutSession($checkoutSessionId, $paymentDetails, $headers);
         $response = json_decode($result['response'], true);
         if((int)$result['status']!==200 && (int)$result['status']!==202){
-            throw new \AmazonPayException('completeCheckoutSession failed: '.$response['message'].' - '.$response['reasonCode']);
+            throw new AmazonPayException('completeCheckoutSession failed: '.$response['message'].' - '.$response['reasonCode']);
         }
         return new CheckoutSession($response);
     }
@@ -110,7 +110,7 @@ class Client extends \Amazon\Pay\API\Client{
         $result = parent::captureCharge($chargeId, $charge, $headers);
         $response = json_decode($result['response'], true);
         if($result['status'] < 200 || $result['status'] > 299) {
-            throw new \AmazonPayException('captureCharge failed: '.$response['message'].' - '.$response['reasonCode']);
+            throw new AmazonPayException('captureCharge failed: '.$response['message'].' - '.$response['reasonCode']);
         }
         return new Charge($response);
     }
@@ -120,7 +120,7 @@ class Client extends \Amazon\Pay\API\Client{
      * @param null|array $headers
      *
      * @return \AmazonPayApiSdkExtension\Struct\Refund
-     * @throws \AmazonPayException
+     * @throws AmazonPayException
      */
     public function createRefund($refund, $headers = null)
     {
@@ -133,7 +133,7 @@ class Client extends \Amazon\Pay\API\Client{
         $result = parent::createRefund($refund, $headers);
         $response = json_decode($result['response'], true);
         if((int)$result['status']!==201){
-            throw new \AmazonPayException('createRefund failed: '.$response['message'].' - '.$response['reasonCode']);
+            throw new AmazonPayException('createRefund failed: '.$response['message'].' - '.$response['reasonCode']);
         }
         return new Refund($response);
     }
@@ -143,7 +143,7 @@ class Client extends \Amazon\Pay\API\Client{
      * @param null|array $headers
      *
      * @return \AmazonPayApiSdkExtension\Struct\Charge
-     * @throws \AmazonPayException
+     * @throws AmazonPayException
      */
     public function createCharge($charge, $headers = null)
     {
@@ -156,7 +156,7 @@ class Client extends \Amazon\Pay\API\Client{
         $result = parent::createCharge($charge, $headers);
         $response = json_decode($result['response'], true);
         if($result['status'] < 200 || $result['status'] > 299) {
-            throw new \AmazonPayException('createCharge failed: '.$response['message'].' - '.$response['reasonCode']);
+            throw new AmazonPayException('createCharge failed: '.$response['message'].' - '.$response['reasonCode']);
         }
         return new Charge($response);
     }
@@ -179,14 +179,14 @@ class Client extends \Amazon\Pay\API\Client{
      * @param null|array $headers
      *
      * @return \AmazonPayApiSdkExtension\Struct\ChargePermission
-     * @throws \AmazonPayException
+     * @throws AmazonPayException
      */
     public function getChargePermission($chargePermissionId, $headers = null)
     {
         $result = parent::getChargePermission($chargePermissionId, $headers);
         $response = json_decode($result['response'], true);
         if($result['status'] < 200 || $result['status'] > 299) {
-            throw new \AmazonPayException('getChargePermission failed: '.$response['message'].' - '.$response['reasonCode']);
+            throw new AmazonPayException('getChargePermission failed: '.$response['message'].' - '.$response['reasonCode']);
         }
         return new ChargePermission($response);
     }
