@@ -57,7 +57,7 @@ List of payment instruments selected by the buyer
     /**
      * @var \AmazonPayApiSdkExtension\Struct\MerchantMetadata
      */
-    protected $merchantMetaData;
+    protected $merchantMetadata;
 
     /**
      * @var string
@@ -229,19 +229,19 @@ List of payment instruments selected by the buyer
     /**
      * @return \AmazonPayApiSdkExtension\Struct\MerchantMetadata
      */
-    public function getMerchantMetaData()
+    public function getMerchantMetadata()
     {
-        return $this->merchantMetaData;
+        return $this->merchantMetadata;
     }
 
     /**
-     * @param \AmazonPayApiSdkExtension\Struct\MerchantMetadata $merchantMetaData
+     * @param \AmazonPayApiSdkExtension\Struct\MerchantMetadata $merchantMetadata
      *
      * @return ChargePermission
      */
-    public function setMerchantMetaData($merchantMetaData)
+    public function setMerchantMetadata($merchantMetadata)
     {
-        $this->merchantMetaData = $merchantMetaData;
+        $this->merchantMetadata = $merchantMetadata;
 
         return $this;
     }

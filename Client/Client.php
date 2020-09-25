@@ -1,4 +1,5 @@
 <?php
+
 namespace AmazonPayApiSdkExtension\Client;
 
 use AmazonPayApiSdkExtension\Struct\Charge;
@@ -8,7 +9,8 @@ use AmazonPayApiSdkExtension\Struct\PaymentDetails;
 use AmazonPayApiSdkExtension\Struct\Refund;
 use AmazonPayApiSdkExtension\Exceptions\AmazonPayException;
 
-class Client extends \Amazon\Pay\API\Client{
+class Client extends \Amazon\Pay\API\Client
+{
     /**
      * @param $checkoutSession
      * @param $headers
@@ -18,16 +20,16 @@ class Client extends \Amazon\Pay\API\Client{
      */
     public function createCheckoutSession($checkoutSession, $headers = null)
     {
-        if($checkoutSession instanceof CheckoutSession){
+        if ($checkoutSession instanceof CheckoutSession) {
             $checkoutSession = $checkoutSession->toArray();
         }
-        if($headers === null){
-           $headers =  ['x-amz-pay-Idempotency-Key' => uniqid()];
+        if ($headers === null) {
+            $headers = ['x-amz-pay-Idempotency-Key' => uniqid()];
         }
-        $result = parent::createCheckoutSession($checkoutSession, $headers);
+        $result   = parent::createCheckoutSession($checkoutSession, $headers);
         $response = json_decode($result['response'], true);
-        if((int)$result['status']!==201){
-            throw new AmazonPayException('createCheckoutSession failed: '.$response['message'].' - '.$response['reasonCode']);
+        if ((int)$result['status'] !== 201) {
+            throw new AmazonPayException('createCheckoutSession failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
         }
 
         return new CheckoutSession($response);
@@ -37,19 +39,20 @@ class Client extends \Amazon\Pay\API\Client{
      * @param string $checkoutSessionId
      * @param null $headers
      *
-     * @return \AmazonPayApiSdkExtension\Struct\CheckoutSession|array|bool|string
+     * @return \AmazonPayApiSdkExtension\Struct\CheckoutSession
      * @throws \Exception
      */
     public function getCheckoutSession($checkoutSessionId, $headers = null)
     {
         $result = parent::getCheckoutSession($checkoutSessionId, $headers);
+
         //$result['status']
         return new CheckoutSession(json_decode($result['response'], true));
     }
 
     /**
      * @param string $checkoutSessionId
-     * @param \AmazonPayApiSdkExtension\Struct\CheckoutSession|array|string$checkoutSession
+     * @param \AmazonPayApiSdkExtension\Struct\CheckoutSession|array|string $checkoutSession
      * @param null $headers
      *
      * @return \AmazonPayApiSdkExtension\Struct\CheckoutSession|array|bool|string
@@ -57,10 +60,11 @@ class Client extends \Amazon\Pay\API\Client{
      */
     public function updateCheckoutSession($checkoutSessionId, $checkoutSession, $headers = null)
     {
-        if($checkoutSession instanceof CheckoutSession){
+        if ($checkoutSession instanceof CheckoutSession) {
             $checkoutSession = $checkoutSession->toArray();
         }
         $result = parent::updateCheckoutSession($checkoutSessionId, $checkoutSession, $headers);
+
         //$result['status']
         return new CheckoutSession(json_decode($result['response'], true));
     }
@@ -75,14 +79,15 @@ class Client extends \Amazon\Pay\API\Client{
      */
     public function completeCheckoutSession($checkoutSessionId, $paymentDetails, $headers = null)
     {
-        if($paymentDetails instanceof PaymentDetails){
+        if ($paymentDetails instanceof PaymentDetails) {
             $paymentDetails = $paymentDetails->toArray();
         }
-        $result = parent::completeCheckoutSession($checkoutSessionId, $paymentDetails, $headers);
+        $result   = parent::completeCheckoutSession($checkoutSessionId, $paymentDetails, $headers);
         $response = json_decode($result['response'], true);
-        if((int)$result['status']!==200 && (int)$result['status']!==202){
-            throw new AmazonPayException('completeCheckoutSession failed: '.$response['message'].' - '.$response['reasonCode']);
+        if ((int)$result['status'] !== 200 && (int)$result['status'] !== 202) {
+            throw new AmazonPayException('completeCheckoutSession failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
         }
+
         return new CheckoutSession($response);
     }
 
@@ -95,23 +100,25 @@ class Client extends \Amazon\Pay\API\Client{
     public function getCharge($chargeId, $headers = null)
     {
         $result = parent::getCharge($chargeId, $headers);
+
         //$result['status']
         return new Charge(json_decode($result['response'], true));
     }
 
     public function captureCharge($chargeId, $charge, $headers = null)
     {
-        if($charge instanceof Charge){
+        if ($charge instanceof Charge) {
             $charge = $charge->toArray();
         }
-        if($headers === null){
-            $headers =  ['x-amz-pay-Idempotency-Key' => uniqid()];
+        if ($headers === null) {
+            $headers = ['x-amz-pay-Idempotency-Key' => uniqid()];
         }
-        $result = parent::captureCharge($chargeId, $charge, $headers);
+        $result   = parent::captureCharge($chargeId, $charge, $headers);
         $response = json_decode($result['response'], true);
-        if($result['status'] < 200 || $result['status'] > 299) {
-            throw new AmazonPayException('captureCharge failed: '.$response['message'].' - '.$response['reasonCode']);
+        if ($result['status'] < 200 || $result['status'] > 299) {
+            throw new AmazonPayException('captureCharge failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
         }
+
         return new Charge($response);
     }
 
@@ -124,17 +131,18 @@ class Client extends \Amazon\Pay\API\Client{
      */
     public function createRefund($refund, $headers = null)
     {
-        if($refund instanceof Refund){
+        if ($refund instanceof Refund) {
             $refund = $refund->toArray();
         }
-        if($headers === null){
-            $headers =  ['x-amz-pay-Idempotency-Key' => uniqid()];
+        if ($headers === null) {
+            $headers = ['x-amz-pay-Idempotency-Key' => uniqid()];
         }
-        $result = parent::createRefund($refund, $headers);
+        $result   = parent::createRefund($refund, $headers);
         $response = json_decode($result['response'], true);
-        if((int)$result['status']!==201){
-            throw new AmazonPayException('createRefund failed: '.$response['message'].' - '.$response['reasonCode']);
+        if ((int)$result['status'] !== 201) {
+            throw new AmazonPayException('createRefund failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
         }
+
         return new Refund($response);
     }
 
@@ -147,30 +155,32 @@ class Client extends \Amazon\Pay\API\Client{
      */
     public function createCharge($charge, $headers = null)
     {
-        if($charge instanceof Charge){
+        if ($charge instanceof Charge) {
             $charge = $charge->toArray();
         }
-        if($headers === null){
-            $headers =  ['x-amz-pay-Idempotency-Key' => uniqid()];
+        if ($headers === null) {
+            $headers = ['x-amz-pay-Idempotency-Key' => uniqid()];
         }
-        $result = parent::createCharge($charge, $headers);
+        $result   = parent::createCharge($charge, $headers);
         $response = json_decode($result['response'], true);
-        if($result['status'] < 200 || $result['status'] > 299) {
-            throw new AmazonPayException('createCharge failed: '.$response['message'].' - '.$response['reasonCode']);
+        if ($result['status'] < 200 || $result['status'] > 299) {
+            throw new AmazonPayException('createCharge failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
         }
+
         return new Charge($response);
     }
-
 
     public function getRefund($refundId, $headers = null)
     {
         $result = parent::getRefund($refundId, $headers);
+
         return new Refund(json_decode($result['response'], true));
     }
 
     public function getBuyer($buyerToken, $headers = null)
     {
         $result = parent::getBuyer($buyerToken, $headers);
+
         return json_decode($result['response'], true);
     }
 
@@ -183,11 +193,34 @@ class Client extends \Amazon\Pay\API\Client{
      */
     public function getChargePermission($chargePermissionId, $headers = null)
     {
-        $result = parent::getChargePermission($chargePermissionId, $headers);
+        $result   = parent::getChargePermission($chargePermissionId, $headers);
         $response = json_decode($result['response'], true);
-        if($result['status'] < 200 || $result['status'] > 299) {
-            throw new AmazonPayException('getChargePermission failed: '.$response['message'].' - '.$response['reasonCode']);
+        if ($result['status'] < 200 || $result['status'] > 299) {
+            throw new AmazonPayException('getChargePermission failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
         }
+
+        return new ChargePermission($response);
+    }
+
+    /**
+     * @param string $chargePermissionId
+     * @param \AmazonPayApiSdkExtension\Struct\CheckoutSession|array|string $chargePermission
+     * @param null $headers
+     *
+     * @return \AmazonPayApiSdkExtension\Struct\CheckoutSession|array|bool|string
+     * @throws \Exception
+     */
+    public function updateChargePermission($chargePermissionId, $chargePermission, $headers = null)
+    {
+        if ($chargePermission instanceof ChargePermission) {
+            $chargePermission = $chargePermission->toArray();
+        }
+        $result   = parent::updateChargePermission($chargePermissionId, $chargePermission, $headers);
+        $response = json_decode($result['response'], true);
+        if ($result['status'] < 200 || $result['status'] > 299) {
+            throw new AmazonPayException('updateChargePermission failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
+        }
+
         return new ChargePermission($response);
     }
 }

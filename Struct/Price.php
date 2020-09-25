@@ -28,7 +28,7 @@ class Price extends StructBase
      */
     public function setAmount($amount)
     {
-        $this->amount = $amount;
+        $this->amount = round($amount, 2);
 
         return $this;
     }
