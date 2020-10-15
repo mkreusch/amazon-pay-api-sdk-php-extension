@@ -19,9 +19,60 @@ class Buyer extends StructBase
     protected $email;
 
     /**
+     * @var string
+     */
+    protected $postalCode;
+
+    /**
+     * @var string
+     */
+    protected $countryCode;
+
+    /**
      * @return string
      */
-    public function getBuyerId()
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * @param string $postalCode
+     *
+     * @return Buyer
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
+    }
+
+    /**
+     * @param string $countryCode
+     *
+     * @return Buyer
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public
+    function getBuyerId()
     {
         return $this->buyerId;
     }
@@ -31,8 +82,10 @@ class Buyer extends StructBase
      *
      * @return Buyer
      */
-    public function setBuyerId($buyerId)
-    {
+    public
+    function setBuyerId(
+        $buyerId
+    ) {
         $this->buyerId = $buyerId;
 
         return $this;
@@ -41,7 +94,8 @@ class Buyer extends StructBase
     /**
      * @return string
      */
-    public function getName()
+    public
+    function getName()
     {
         return $this->name;
     }
@@ -51,8 +105,10 @@ class Buyer extends StructBase
      *
      * @return Buyer
      */
-    public function setName($name)
-    {
+    public
+    function setName(
+        $name
+    ) {
         $this->name = $name;
 
         return $this;
@@ -61,7 +117,8 @@ class Buyer extends StructBase
     /**
      * @return string
      */
-    public function getEmail()
+    public
+    function getEmail()
     {
         return $this->email;
     }
@@ -71,12 +128,13 @@ class Buyer extends StructBase
      *
      * @return Buyer
      */
-    public function setEmail($email)
-    {
+    public
+    function setEmail(
+        $email
+    ) {
         $this->email = $email;
 
         return $this;
     }
-
 
 }

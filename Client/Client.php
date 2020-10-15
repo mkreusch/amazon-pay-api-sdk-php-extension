@@ -2,6 +2,7 @@
 
 namespace AmazonPayApiSdkExtension\Client;
 
+use AmazonPayApiSdkExtension\Struct\Buyer;
 use AmazonPayApiSdkExtension\Struct\Charge;
 use AmazonPayApiSdkExtension\Struct\ChargePermission;
 use AmazonPayApiSdkExtension\Struct\CheckoutSession;
@@ -170,6 +171,12 @@ class Client extends \Amazon\Pay\API\Client
         return new Charge($response);
     }
 
+    /**
+     * @param $refundId
+     * @param array|null $headers
+     *
+     * @return \AmazonPayApiSdkExtension\Struct\Refund
+     */
     public function getRefund($refundId, $headers = null)
     {
         $result = parent::getRefund($refundId, $headers);
@@ -177,11 +184,17 @@ class Client extends \Amazon\Pay\API\Client
         return new Refund(json_decode($result['response'], true));
     }
 
+    /**
+     * @param $buyerToken
+     * @param array|null $headers
+     *
+     * @return \AmazonPayApiSdkExtension\Struct\Buyer
+     */
     public function getBuyer($buyerToken, $headers = null)
     {
         $result = parent::getBuyer($buyerToken, $headers);
 
-        return json_decode($result['response'], true);
+        return new Buyer(json_decode($result['response'], true));
     }
 
     /**
@@ -223,4 +236,5 @@ class Client extends \Amazon\Pay\API\Client
 
         return new ChargePermission($response);
     }
+
 }
