@@ -50,7 +50,7 @@ class MerchantMetadata extends StructBase
      */
     public function getMerchantStoreName()
     {
-        return $this->merchantStoreName;
+        return strlen($this->merchantStoreName)>50?substr($this->merchantStoreName, 0, 47).'...':$this->merchantStoreName;
     }
 
     /**

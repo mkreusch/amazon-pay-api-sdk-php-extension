@@ -46,9 +46,11 @@ class Client extends \Amazon\Pay\API\Client
     public function getCheckoutSession($checkoutSessionId, $headers = null)
     {
         $result = parent::getCheckoutSession($checkoutSessionId, $headers);
-
-        //$result['status']
-        return new CheckoutSession(json_decode($result['response'], true));
+        $response = json_decode($result['response'], true);
+        if ((int)$result['status'] !== 200) {
+            throw new AmazonPayException($response['message']);
+        }
+        return new CheckoutSession($response);
     }
 
     /**
@@ -97,13 +99,16 @@ class Client extends \Amazon\Pay\API\Client
      * @param null $headers
      *
      * @return \AmazonPayApiSdkExtension\Struct\Charge|array|bool|string
+     * @throws AmazonPayException
      */
     public function getCharge($chargeId, $headers = null)
     {
         $result = parent::getCharge($chargeId, $headers);
-
-        //$result['status']
-        return new Charge(json_decode($result['response'], true));
+        $response = json_decode($result['response'], true);
+        if ((int)$result['status'] !== 200) {
+            throw new AmazonPayException('getCharge failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
+        }
+        return new Charge($response);
     }
 
     public function captureCharge($chargeId, $charge, $headers = null)
@@ -176,12 +181,16 @@ class Client extends \Amazon\Pay\API\Client
      * @param array|null $headers
      *
      * @return \AmazonPayApiSdkExtension\Struct\Refund
+     * @throws AmazonPayException
      */
     public function getRefund($refundId, $headers = null)
     {
         $result = parent::getRefund($refundId, $headers);
-
-        return new Refund(json_decode($result['response'], true));
+        $response = json_decode($result['response'], true);
+        if ((int)$result['status'] !== 200) {
+            throw new AmazonPayException('getCharge failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
+        }
+        return new Refund($response);
     }
 
     /**
@@ -189,11 +198,15 @@ class Client extends \Amazon\Pay\API\Client
      * @param array|null $headers
      *
      * @return \AmazonPayApiSdkExtension\Struct\Buyer
+     * @throws AmazonPayException
      */
     public function getBuyer($buyerToken, $headers = null)
     {
         $result = parent::getBuyer($buyerToken, $headers);
-
+        $response = json_decode($result['response'], true);
+        if ((int)$result['status'] !== 200) {
+            throw new AmazonPayException('getBuyer failed: ' . $response['message'] . ' - ' . $response['reasonCode']);
+        }
         return new Buyer(json_decode($result['response'], true));
     }
 
